@@ -5,6 +5,7 @@ import co.edu.escuelaing.springsecurity.model.RestFull;
 import co.edu.escuelaing.springsecurity.repository.RestFullRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,6 @@ public class RestFullRepositoryImp implements RestFullRepository {
 
     @Override
     public List<RestFull> getAll() {
-        return (List<RestFull>) restFullEntities.values();
+        return new ArrayList<>(restFullEntities.values());
     }
 }

@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -23,5 +26,12 @@ public class User {
     private List<RoleEnum> roles;
 
 
+    public User(User userDto) {
+        this.email = userDto.getEmail();
+        this.name = userDto.getName();
+        this.lastName = userDto.getLastName();
+        this.password = userDto.getPassword();
+        this.roles = new ArrayList<>(Collections.singleton(RoleEnum.USER));
+    }
 }
 
