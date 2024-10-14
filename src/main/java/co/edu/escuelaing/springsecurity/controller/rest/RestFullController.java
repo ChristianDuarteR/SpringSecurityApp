@@ -32,7 +32,8 @@ public class RestFullController {
     @PostMapping
     public ResponseEntity<RestFull> createRealEntity(@RequestBody RestFull restFull) throws URISyntaxException {
         RestFull real = restFullServices.create(restFull);
-        URI uri = new URI("api/v1/realentitys/ "+ real.getId());
+
+        URI uri = new URI("api/v1/restfull/"+ real.getId());
         return ResponseEntity.created(uri).body(real);
     }
 

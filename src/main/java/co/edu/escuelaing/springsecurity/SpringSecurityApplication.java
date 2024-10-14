@@ -45,7 +45,7 @@ public class SpringSecurityApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/*")
-                        .allowedOrigins("https://https://taller-apache-security.duckdns.org")
+                        .allowedOrigins("https://taller-apache-security.duckdns.org")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("")
                         .allowCredentials(true);

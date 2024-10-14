@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Document(collection = "users")
 public class MyUser {
     @Id
@@ -20,7 +19,13 @@ public class MyUser {
 
     private String role;
 
-    public MyUser(MyUser userDto) {
-
+    @Override
+    public String toString() {
+        return "MyUser{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 }
