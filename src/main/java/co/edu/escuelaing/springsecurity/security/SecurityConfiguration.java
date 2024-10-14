@@ -33,13 +33,17 @@ public class SecurityConfiguration {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry ->  {
+                registry.requestMatchers("/login").permitAll();
                 registry.requestMatchers("/api/v1/register").permitAll();
                 registry.requestMatchers("/api/v1/restfull").hasRole("USER");
                 registry.requestMatchers("api/v1/users").hasRole("USER");
                 registry.anyRequest().authenticated();
         })
         .formLogin(httpSecurityFormLoginConfigurer -> {
-            httpSecurityFormLoginConfigurer.loginPage("/login").permitAll();
+            httpSecurityFormLoginConfigurer
+                    .loginPage("/login")
+                    .successHandler(new AuthenticationSuccessHandler())
+                    .permitAll();
         })
         .build();
     }
