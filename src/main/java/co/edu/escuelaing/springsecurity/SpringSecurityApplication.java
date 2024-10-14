@@ -43,10 +43,12 @@ public class SpringSecurityApplication {
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry){
-                registry.addMapping("/**")
-                        .allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE");
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/*")
+                        .allowedOrigins("https://https://taller-apache-security.duckdns.org")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedHeaders("")
+                        .allowCredentials(true);
             }
         };
     }
