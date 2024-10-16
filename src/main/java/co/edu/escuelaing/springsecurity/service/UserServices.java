@@ -28,14 +28,6 @@ public class UserServices  {
         return userRepository.findByUsername(email);
     }
 
-    public void createUser(MyUser user) throws UserBadRequestException {
-        if(user.getUsername() == null
-                || user.getPassword() == null) throw new UserBadRequestException();
-        else {
-            userRepository.save(user);
-        }
-    }
-
     public void deleteUser(MyUser user) {
         userRepository.delete(user);
     }

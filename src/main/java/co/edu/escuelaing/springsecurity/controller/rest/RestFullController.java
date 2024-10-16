@@ -4,10 +4,12 @@ package co.edu.escuelaing.springsecurity.controller.rest;
 import co.edu.escuelaing.springsecurity.exceptions.RestFullNotFound;
 import co.edu.escuelaing.springsecurity.model.RestFull;
 import co.edu.escuelaing.springsecurity.service.RestFullServices;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -23,40 +25,44 @@ public class RestFullController {
         this.restFullServices = restFullServices;
     }
 
+    // Obtener todos los registros de RestFull
     @GetMapping
-    public ResponseEntity<List<RestFull>> getData(){
+    public void getData(HttpServletResponse response) throws IOException {
         List<RestFull> restFulls = restFullServices.getAll();
-        return ResponseEntity.ok(restFulls);
+        // Redirige a una página de vista general si es necesario
+        response.sendRedirect("https://taller-apache-security.duckdns.org/index.html");
     }
 
+    // Crear una nueva entidad RestFull
     @PostMapping
-    public ResponseEntity<RestFull> createRealEntity(@RequestBody RestFull restFull) throws URISyntaxException {
+    public void createRestFull(@ModelAttribute RestFull restFull, HttpServletResponse response) throws IOException {
         RestFull real = restFullServices.create(restFull);
-
-        URI uri = new URI("api/v1/restfull/"+ real.getId());
-        return ResponseEntity.created(uri).body(real);
+        // Redirige después de crear exitosamente
+        response.sendRedirect("https://taller-apache-security.duckdns.org/index.html");
     }
 
+    // Actualizar una entidad RestFull existente
     @PutMapping("{id}")
-    public ResponseEntity<RestFull> updateRealEntity(@PathVariable String id, @RequestBody RestFull realEntityData){
+    public void updateRestFull(@PathVariable String id, @ModelAttribute RestFull realEntityData, HttpServletResponse response) throws IOException {
         try {
             RestFull real = restFullServices.updateRestFull(id, realEntityData);
-            URI uri = new URI("api/v1/realentitys/" + realEntityData.getId());
-            return ResponseEntity.created(uri).body(real);
-        }catch (URISyntaxException e){
-            return ResponseEntity.badRequest().build();
+            // Redirige después de la actualización exitosa
+            response.sendRedirect("https://taller-apache-security.duckdns.org/index.html");
         } catch (RestFullNotFound e) {
-            throw new RuntimeException(e);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "RestFull not found");
         }
     }
 
+    // Eliminar una entidad RestFull
     @DeleteMapping("{id}")
-    public ResponseEntity<RestFull> deleteRealEntity(@PathVariable String id){
+    public void deleteRestFull(@PathVariable String id, HttpServletResponse response) throws IOException {
         try {
             restFullServices.deleteRestFull(id);
-            return ResponseEntity.noContent().build();
-        }catch (RestFullNotFound e){
-            return ResponseEntity.notFound().build();
+            // Redirige después de la eliminación exitosa
+            response.sendRedirect("https://taller-apache-security.duckdns.org/index.html");
+        } catch (RestFullNotFound e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "RestFull not found");
         }
     }
 }
+
